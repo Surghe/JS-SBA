@@ -16,3 +16,17 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
 
         // Create a map to store learner data
         const learnerDataMap = new Map();
+
+        // Process each learner submission
+        for (const submission of LearnerSubmissions) {
+            const assignment = dueAssignments.find(a => a.id === submission.assignment_id);
+            if (assignment) {
+                const learnerId = submission.learner_id;
+                const assignmentId = assignment.id;
+                const pointsPossible = assignment.points_possible;
+                let score = submission.submission.score;
+
+                // Check if points_possible is zero
+                if (pointsPossible === 0) {
+                    throw new Error("Invalid input: points_possible cannot be zero.");
+                }
